@@ -1,11 +1,3 @@
-# Frontend Template
+# Chefs Kiss
 
-You can use this repository as a template for your frontend. It provides a very simple
-React Router layout with a navbar, an `AuthContext` with login and register pages, and an
-`ApiContext` with two custom hooks: `useQuery` and `useMutation`.
-
-## Usage
-
-1. Change the name of the package in `package.json`.
-2. Update the environment variables in `example.env` and rename the file to `.env`.
-3. Build components and add routes to them in `App.jsx`.
+“Chef’s Kiss” is an online platform for sharing and saving your favorite recipes. Each user is able to post, share, and “like” other user’s recipes. Recipes can be posted with static images and text, or videos. The benefit of using this platform is that users cut out the bloat that comes with the recipe story blogs, and pushes the recipe straight to other users. Food has always brought us together, so we encourage users to share recipes from their different cultures for everyone around the world to try
