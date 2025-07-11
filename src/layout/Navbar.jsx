@@ -1,19 +1,39 @@
-import { NavLink } from "react-router";
-
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Navbar() {
   const { token, logout } = useAuth();
+
   return (
-    <header id="navbar">
-      <NavLink id="brand" to="/">
-        <p>Chefs Kiss</p>
+    <header className="navbar-header">
+      <NavLink className="navbar-brand" to="/Home">
+        <p style={{ margin: 0 }}>Chef's Kiss</p>
       </NavLink>
-      <nav>
+      <nav className="navbar-nav">
+        <NavLink
+          to="/AddRecipe"
+          className={({ isActive }) =>
+            "navbar-link" + (isActive ? " active" : "")
+          }
+        >
+          Add Recipe
+        </NavLink>
+        <NavLink
+          to="/Profile"
+          className={({ isActive }) =>
+            "navbar-link" + (isActive ? " active" : "")
+          }
+        >
+          Profile
+        </NavLink>
         {token ? (
-          <button onClick={logout}>Log out</button>
+          <button className="navbar-button" onClick={logout}>
+            Log out
+          </button>
         ) : (
-          <NavLink to="/login">Log in</NavLink>
+          <NavLink to="/login" className="navbar-button">
+            Log in
+          </NavLink>
         )}
       </nav>
     </header>
