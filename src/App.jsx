@@ -15,14 +15,14 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="/recipe" element={<Recipe />} />
-        <Route path="/addrecipe" element={<AddRecipe />} />
-        <Route path="/recipes" element={<RecipeList />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="recipe" element={<Recipe />} />
+        <Route path="addrecipe" element={<AddRecipe />} />
+        <Route path="recipes" element={<RecipeList />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<AboutUs />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="about" element={<AboutUs />} />
       </Route>
     </Routes>
   );
