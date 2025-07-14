@@ -24,7 +24,6 @@ const HomePage = () => {
     "userFavorites",
   ]);
 
-  // Fetch user favorites when component mounts and token exists
   useEffect(() => {
     const fetchUserFavorites = async () => {
       if (token) {
@@ -94,8 +93,7 @@ const HomePage = () => {
         navigate("/login");
         return;
       }
-
-      // Use the API context directly for DELETE with dynamic endpoint
+      
       const result = await request(`/favorites/${recipeId}`, {
         method: "DELETE",
         body: JSON.stringify({ user_id: userId }),

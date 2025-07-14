@@ -10,21 +10,36 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.6.0"
+    "react-router": "^7.6.0",
+    "react-router-dom": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitejs/plugin-react-swc": "^3.10.2",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
-    "vite": "^6.1.0"
+    "vite": "^6.3.5"
   },
   "engines": {
     "node": ">= 22.0.0"
-  }
+  },
+  "version": "1.0.0",
+  "description": "“Chef’s Kiss” is an online platform for sharing and saving your favorite recipes. Each user is able to post, share, and “like” other user’s recipes. Recipes can be posted with static images and text, or videos. The benefit of using this platform is that users cut out the bloat that comes with the recipe story blogs, and pushes the recipe straight to other users. Food has always brought us together, so we encourage users to share recipes from their different cultures for everyone around the world to try",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChefsKiss1/Chefs-kiss-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChefsKiss1/Chefs-kiss-frontend/issues"
+  },
+  "homepage": "https://github.com/ChefsKiss1/Chefs-kiss-frontend#readme"
 }

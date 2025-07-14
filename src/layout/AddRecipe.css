@@ -1,0 +1,123 @@
+root {
+  --primary-color: #e50914;
+  --dark-color: #141414;
+  --light-color: #f4f4f4;
+  --input-border: #333;
+  --input-focus-border: #e50914;
+  --button-text-color: #fff;
+  --font-family: "Netflix Sans", Helvetica Neue, Segoe UI, Roboto, Ubuntu,
+    sans-serif;
+  --font-size: 16px;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--dark-color);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Form Container */
+.add-recipe-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #222;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Styling */
+.add-recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.add-recipe-header {
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.add-recipe-input,
+.add-recipe-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size);
+  background-color: #333;
+  color: #fff;
+  box-sizing: border-box;
+  transition: border-color var(--transition-speed);
+}
+
+.add-recipe-input:focus,
+.add-recipe-textarea:focus {
+  border-color: var(--input-focus-border);
+  outline: none;
+}
+
+.add-recipe-textarea {
+  resize: vertical;
+}
+
+.add-recipe-button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.add-recipe-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.add-recipe-button:hover:not(:disabled) {
+  background-color: #b20710;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .add-recipe-form {
+    padding: 15px;
+  }
+
+  .add-recipe-input,
+  .add-recipe-textarea,
+  .add-recipe-button {
+    font-size: 14px;
+  }
+}

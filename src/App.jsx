@@ -9,6 +9,11 @@ import Contact from "./layout/Contact";
 import AboutUs from "./layout/AboutUs";
 import Recipe from "./layout/Recipe";
 
+import AddRecipe from "./layout/AddRecipe";
+import RecipeList from "./layout/RecipeList";
+import Contact from "./layout/Contact";
+import AboutUs from "./layout/AboutUs";
+
 export default function App() {
   return (
     <Routes>
