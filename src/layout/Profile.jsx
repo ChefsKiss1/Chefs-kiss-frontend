@@ -44,7 +44,7 @@ export default function ProfilePage() {
             className={`profile-tab${tab === "add-recipe" ? " active" : ""}`}
             onClick={() => setTab("add-recipe")}
           >
-            Add Recipe
+            Recipes
           </button>
           <button
             className={`profile-tab${tab === "favorites" ? " active" : ""}`}
