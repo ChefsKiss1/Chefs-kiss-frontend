@@ -6,7 +6,7 @@ export default function Navbar() {
 
   return (
     <header className="navbar-header">
-      <NavLink className="navbar-brand" to="/Home">
+      <NavLink className="navbar-brand" to="/">
         <p style={{ margin: 0 }}>Chef's Kiss</p>
       </NavLink>
       <nav className="navbar-nav">
