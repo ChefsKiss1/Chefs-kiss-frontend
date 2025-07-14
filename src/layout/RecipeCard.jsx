@@ -5,10 +5,12 @@ const RecipeCard = ({
   rank,
   recipes,
   onAddToFavorites,
+  onRemoveFromFavorites,
   favoritingRecipe,
   token,
   showRank = false,
   showTopFavoriteTag = false,
+  isFavorited = false,
 }) => {
   const navigate = useNavigate();
 
@@ -51,18 +53,26 @@ const RecipeCard = ({
       </p>
       <p>Favorites: {recipe.favoritecount}</p>
 
-      {onAddToFavorites && (
+      {(onAddToFavorites || onRemoveFromFavorites) && (
         <button
           onClick={(e) => {
             e.stopPropagation();
-            onAddToFavorites(recipe.id);
+            if (isFavorited && onRemoveFromFavorites) {
+              onRemoveFromFavorites(recipe.id);
+            } else if (onAddToFavorites) {
+              onAddToFavorites(recipe.id);
+            }
           }}
           disabled={favoritingRecipe === recipe.id}
         >
           {favoritingRecipe === recipe.id
-            ? "Adding..."
+            ? isFavorited
+              ? "Removing..."
+              : "Adding..."
             : !token
             ? "Login to Favorite"
+            : isFavorited
+            ? "💔 Remove from Favorites"
             : "❤️ Add to Favorites"}
         </button>
       )}
