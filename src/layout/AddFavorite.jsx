@@ -9,28 +9,30 @@ const AddFavorite = ({
   isFavorited,
   onFavoriteChange,
   className = "",
-  children,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { token } = useAuth();
-  const { request, invalidateTags } = useApi();
+  const { request } = useApi();
 
-  const { mutate: addToFavorites } = useMutation("POST", "/favorites", [
-    "topRecipes",
-    "userFavorites",
-  ]);
+  const { mutate: addToFavorites } = useMutation("POST", "/favorites", []);
 
   const getUserIdFromToken = () => {
     if (!token) return null;
 
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.user_id || payload.id;
+      return payload.id;
     } catch (error) {
       console.error("Error decoding token:", error);
       return null;
     }
+  };
+
+  const handleError = (err) => {
+    const errorMessage = err.message || err.error || "An error occurred";
+    alert(`Error: ${errorMessage}`);
+    console.error("Full error:", err);
   };
 
   const handleAddToFavorites = async () => {
@@ -50,12 +52,10 @@ const AddFavorite = ({
 
       if (success) {
         onFavoriteChange(recipeId, true);
-        alert("Recipe added to favorites!");
+        window.location.reload();
       }
     } catch (err) {
-      const errorMessage = err.message || err.error || "An error occurred";
-      alert(`Error: ${errorMessage}`);
-      console.error("Full error:", err);
+      handleError(err);
     } finally {
       setIsLoading(false);
     }
@@ -78,13 +78,10 @@ const AddFavorite = ({
 
       if (result) {
         onFavoriteChange(recipeId, false);
-        invalidateTags(["topRecipes", "userFavorites"]);
-        alert("Recipe removed from favorites!");
+        window.location.reload();
       }
     } catch (err) {
-      const errorMessage = err.message || err.error || "An error occurred";
-      alert(`Error: ${errorMessage}`);
-      console.error("Full error:", err);
+      handleError(err);
     } finally {
       setIsLoading(false);
     }
@@ -98,14 +95,6 @@ const AddFavorite = ({
       handleAddToFavorites();
     }
   };
-
-  if (children) {
-    return (
-      <div onClick={handleClick} className={className}>
-        {children}
-      </div>
-    );
-  }
 
   return (
     <button onClick={handleClick} disabled={isLoading} className={className}>
