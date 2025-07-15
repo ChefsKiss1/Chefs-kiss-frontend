@@ -21,10 +21,10 @@ export default function App() {
         <Route path="recipes" element={<RecipeList />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<AboutUs />} />
-        <Route path="/recipe/:id/edit" element={<RecipeEdit />} />
+        <Route path="edit" element={<RecipeEdit />} />
       </Route>
     </Routes>
   );
