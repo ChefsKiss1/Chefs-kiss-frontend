@@ -11,6 +11,7 @@ const RecipeCard = ({
   showRank = false,
   showTopFavoriteTag = false,
   isFavorited = false,
+  currentUserId,
 }) => {
   const navigate = useNavigate();
 
@@ -52,6 +53,17 @@ const RecipeCard = ({
         </span>
       </p>
       <p>Favorites: {recipe.favoritecount}</p>
+
+      {recipe.ownerId === currentUserId && (
+        <button
+          onClick={e => {
+            e.stopPropagation();
+            navigate(`/recipe/${recipe.id}/edit`);
+          }}
+        >
+          Edit
+        </button>
+      )}
 
       {(onAddToFavorites || onRemoveFromFavorites) && (
         <button

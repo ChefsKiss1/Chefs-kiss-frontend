@@ -9,6 +9,7 @@ import RecipeList from "./layout/RecipeList";
 import Contact from "./layout/Contact";
 import AboutUs from "./layout/AboutUs";
 import Recipe from "./layout/Recipe";
+import RecipeEdit from "./pages/RecipeEdit";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<AboutUs />} />
+        <Route path="/recipe/:id/edit" element={<RecipeEdit />} />
       </Route>
     </Routes>
   );

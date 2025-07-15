@@ -139,6 +139,7 @@ const HomePage = () => {
                   showRank={true}
                   showTopFavoriteTag={true}
                   isFavorited={userFavorites.includes(recipe.id)}
+                  currentUserId={getUserIdFromToken()}
                 />
               ))}
             </div>
