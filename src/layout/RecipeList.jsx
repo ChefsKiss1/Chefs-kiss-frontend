@@ -1,4 +1,5 @@
 import useQuery from "../api/useQuery";
+import { NavLink } from "react-router";
 
 export default function RecipeList() {
   const { data: recipes, loading, error } = useQuery("/recipes", "recipes");
@@ -11,7 +12,9 @@ export default function RecipeList() {
       <h2>All Recipes</h2>
       <ul>
         {recipes?.map((recipe) => (
-          <li key={recipe.id}>{recipe.title}</li>
+          <NavLink to={"/recipes/" + recipe.id} key={recipe.id}>
+            {recipe.title}
+          </NavLink>
         ))}
       </ul>
     </div>
