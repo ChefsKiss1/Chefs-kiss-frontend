@@ -6,14 +6,22 @@ import RecipeCard from "./RecipeCard";
 
 const HomePage = () => {
   const [userFavorites, setUserFavorites] = useState([]);
+  const [displayRecipes, setDisplayRecipes] = useState([]);
   const { token } = useAuth();
   const { request } = useApi();
 
   const {
-    data: recipes = [],
-    loading,
-    error,
+    data: favoritedRecipes = [],
+    loading: favoritesLoading,
+    error: favoritesError,
   } = useQuery("/favorites/top-favorited", "topRecipes");
+
+  const needsRandomRecipes = favoritedRecipes.length < 9;
+  const {
+    data: randomRecipes = [],
+    loading: randomLoading,
+    error: randomError,
+  } = useQuery(needsRandomRecipes ? "/recipes/random" : null, "randomRecipes");
 
   useEffect(() => {
     const fetchUserFavorites = async () => {
@@ -35,6 +43,28 @@ const HomePage = () => {
     fetchUserFavorites();
   }, [token, request]);
 
+  useEffect(() => {
+    let recipes = [];
+
+    if (favoritedRecipes.length >= 9) {
+      recipes = favoritedRecipes.slice(0, 9);
+    } else if (randomRecipes.length > 0) {
+      const favoritedIds = new Set(favoritedRecipes.map((recipe) => recipe.id));
+      const uniqueRandomRecipes = randomRecipes.filter(
+        (recipe) => !favoritedIds.has(recipe.id)
+      );
+
+      recipes = [
+        ...favoritedRecipes,
+        ...uniqueRandomRecipes.slice(0, 9 - favoritedRecipes.length),
+      ];
+    } else {
+      recipes = favoritedRecipes;
+    }
+
+    setDisplayRecipes(recipes);
+  }, [favoritedRecipes, randomRecipes]);
+
   const handleFavoriteChange = (recipeId, isNowFavorited) => {
     if (isNowFavorited) {
       setUserFavorites((prev) => [...prev, recipeId]);
@@ -43,47 +73,43 @@ const HomePage = () => {
     }
   };
 
-  // Calculate max favorites for top favorite display
-  const maxFavorites =
-    recipes.length > 0 ? Math.max(...recipes.map((r) => r.favoritecount)) : 0;
+  const loading = favoritesLoading || (needsRandomRecipes && randomLoading);
+  const error = favoritesError || randomError;
 
   return (
     <div>
       <div className="home-content">
-        <h1>Welcome to Chef's Kiss</h1>
+        <h1>Welcome to Chef&apos;s Kiss</h1>
 
         <section className="featured-recipes">
-          <h2>Top 9 Most Favorited Recipes</h2>
+          <h2>Featured Recipes</h2>
 
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error}</p>}
 
-          {recipes.length > 0 && !loading && (
+          {displayRecipes.length > 0 && !loading && (
             <div className="recipes-grid">
-              {recipes.map((recipe, index) => {
-                const isTopFavorited = recipe.favoritecount === maxFavorites;
+              {displayRecipes.map((recipe) => {
+                const isFavoritedRecipe = favoritedRecipes.some(
+                  (fav) => fav.id === recipe.id
+                );
 
                 return (
-                  <div key={recipe.id || index} className="recipe-card-wrapper">
-                    <div className="recipe-rank">#{index + 1}</div>
-                    {isTopFavorited && (
-                      <div className="top-favorite-tag">🏆 Most Favorited!</div>
+                  <RecipeCard
+                    key={recipe.id}
+                    recipe={recipe}
+                    isFavorited={userFavorites.includes(recipe.id)}
+                    onFavoriteChange={handleFavoriteChange}
+                  >
+                    {!isFavoritedRecipe && (
+                      <div className="recipe-badge">Random Pick</div>
                     )}
-
-                    <RecipeCard
-                      recipe={recipe}
-                      onFavoriteChange={handleFavoriteChange}
-                      isFavorited={userFavorites.includes(recipe.id)}
-                    />
-                  </div>
+                  </RecipeCard>
                 );
               })}
             </div>
           )}
-
-          {recipes.length === 0 && !loading && !error && (
-            <p>No recipes found.</p>
-          )}
+          {displayRecipes.length === 0 && !loading && <p>No recipes found.</p>}
         </section>
       </div>
     </div>

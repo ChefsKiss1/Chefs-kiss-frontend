@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import AddFavorite from "./AddFavorite";
 
-const RecipeCard = ({ recipe, onFavoriteChange, isFavorited = false }) => {
+const RecipeCard = ({
+  recipe,
+  onFavoriteChange,
+  isFavorited = false,
+  children,
+}) => {
   const navigate = useNavigate();
 
   const handleUsernameClick = (username) => {
@@ -18,7 +23,21 @@ const RecipeCard = ({ recipe, onFavoriteChange, isFavorited = false }) => {
       onClick={handleRecipeClick}
       style={{ cursor: "pointer" }}
     >
+      {children}
+
       <h3>{recipe.name}</h3>
+
+      {recipe.img_url && (
+        <img
+          src={recipe.img_url}
+          alt={recipe.name}
+          className="recipe-image"
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
+      )}
+
       <p>
         Created by:
         <span
@@ -31,7 +50,10 @@ const RecipeCard = ({ recipe, onFavoriteChange, isFavorited = false }) => {
           {recipe.username}
         </span>
       </p>
-      <p>Favorites: {recipe.favoritecount}</p>
+
+      {recipe.favoritecount !== undefined && (
+        <p className="favorite-count">❤️ {recipe.favoritecount} favorites</p>
+      )}
 
       {onFavoriteChange && (
         <AddFavorite
