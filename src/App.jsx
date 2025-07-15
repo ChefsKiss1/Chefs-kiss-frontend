@@ -9,7 +9,7 @@ import RecipeList from "./layout/RecipeList";
 import Contact from "./layout/Contact";
 import AboutUs from "./layout/AboutUs";
 import Recipe from "./layout/Recipe";
-import RecipeEdit from "./pages/RecipeEdit";
+import RecipeEdit from "./layout/RecipeEdit";
 
 export default function App() {
   return (
