@@ -60,6 +60,7 @@ const HomePage = () => {
 
           {recipes.length > 0 && !loading && (
             <div className="recipes-grid">
+
               {recipes.map((recipe, index) => {
                 const isTopFavorited = recipe.favoritecount === maxFavorites;
 

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import AddFavorite from "./AddFavorite";
 
+
 const RecipeCard = ({ recipe, onFavoriteChange, isFavorited = false }) => {
   const navigate = useNavigate();
 
