@@ -9,6 +9,7 @@ import RecipeList from "./layout/RecipeList";
 import Contact from "./layout/Contact";
 import AboutUs from "./layout/AboutUs";
 import Recipe from "./layout/Recipe";
+import RecipeEdit from "./layout/RecipeEdit";
 
 export default function App() {
   return (
@@ -20,9 +21,10 @@ export default function App() {
         <Route path="recipes" element={<RecipeList />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<AboutUs />} />
+        <Route path="edit" element={<RecipeEdit />} />
       </Route>
     </Routes>
   );
