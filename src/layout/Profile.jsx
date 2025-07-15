@@ -1,34 +1,50 @@
-import { useState } from "react";
-
-const dummyUser = {
-  name: "Your Name",
-  avatar: "https://ui-avatars.com/api/?name=Y+N&background=222&color=fff", // Placeholder
-};
-
-const dummyRecipes = [
-  { id: 1, title: "Pinned Post", pinned: true },
-  { id: 2, title: "Favorite Recipe", favorite: true },
-  { id: 3, title: "Other Post" },
-  { id: 4, title: "Favorite Recipe 2", favorite: true },
-  { id: 5, title: "Other Post" },
-];
+import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
-  const [tab, setTab] = useState("favorites"); // or "add-recipe"
+  const [tab, setTab] = useState("recipes");
+  const [user, setUser] = useState(null);
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProfileData() {
+      const token = sessionStorage.getItem("token");
+      console.log(token);
+      if (!token) {
+        setLoading(false);
+        setUser(null);
+        setRecipes([]);
+        return;
+      }
+
+      const BASE_URL = import.meta.env.VITE_API_URL;
+
+      const recipesRes = await fetch(`${BASE_URL}/recipes/user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const recipesData = recipesRes.ok ? await recipesRes.json() : [];
+      setRecipes(recipesData);
+      setLoading(false);
+    }
+    fetchProfileData();
+  }, []);
 
   const filtered =
     tab === "favorites"
-      ? dummyRecipes.filter((r) => r.favorite || r.pinned)
-      : dummyRecipes;
+      ? recipes.filter((r) => r.favorite || r.pinned)
+      : recipes;
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>Please log in.</div>;
 
   return (
     <div className="profile-page">
       <div className="profile-header">
         <div className="profile-user-row">
-          <img className="profile-avatar" src={dummyUser.avatar} alt="avatar" />
+          <img className="profile-avatar" src={user.avatar} alt="avatar" />
           <div>
             <div style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
-              {dummyUser.name}
+              {user.name}
             </div>
           </div>
         </div>
@@ -41,8 +57,8 @@ export default function ProfilePage() {
       <div className="profile-main">
         <div className="profile-tabs">
           <button
-            className={`profile-tab${tab === "add-recipe" ? " active" : ""}`}
-            onClick={() => setTab("add-recipe")}
+            className={`profile-tab${tab === "recipes" ? " active" : ""}`}
+            onClick={() => setTab("recipes")}
           >
             Recipes
           </button>
