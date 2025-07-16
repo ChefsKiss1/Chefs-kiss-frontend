@@ -9,21 +9,36 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchProfileData() {
       const token = sessionStorage.getItem("token");
-      console.log(token);
       if (!token) {
         setLoading(false);
         setUser(null);
         setRecipes([]);
         return;
       }
-
       const BASE_URL = import.meta.env.VITE_API_URL;
 
+      // Fetch user profile
+      const userRes = await fetch(`${BASE_URL}/users/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const userData = userRes.ok ? await userRes.json() : null;
+
+      // If not logged in or token invalid
+      if (!userData) {
+        setUser(null);
+        setRecipes([]);
+        setLoading(false);
+        return;
+      }
+      setUser(userData);
+
+      // Fetch recipes for user
       const recipesRes = await fetch(`${BASE_URL}/recipes/user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const recipesData = recipesRes.ok ? await recipesRes.json() : [];
       setRecipes(recipesData);
+
       setLoading(false);
     }
     fetchProfileData();
