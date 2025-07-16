@@ -31,7 +31,7 @@ export default function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<AboutUs />} />
-        <Route path="edit" element={<RecipeEdit />} />
+        <Route path="/recipe/:id/edit" element={<RecipeEdit />} />
        </Route>
     </Routes>
   );
