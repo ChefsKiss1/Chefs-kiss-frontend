@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { useApi } from "../api/ApiContext";
 import useQuery from "../api/useQuery";
@@ -23,25 +23,25 @@ const HomePage = () => {
     error: randomError,
   } = useQuery(needsRandomRecipes ? "/recipes/random" : null, "randomRecipes");
 
-  useEffect(() => {
-    const fetchUserFavorites = async () => {
-      if (token) {
-        try {
-          const favorites = await request("/favorites/user", {
-            method: "GET",
-          });
-          if (favorites && Array.isArray(favorites)) {
-            const favoriteIds = favorites.map((fav) => fav.recipe_id || fav.id);
-            setUserFavorites(favoriteIds);
-          }
-        } catch (error) {
-          console.error("Error fetching user favorites:", error);
+  const fetchUserFavorites = useCallback(async () => {
+    if (token) {
+      try {
+        const favorites = await request("/favorites/user", {
+          method: "GET",
+        });
+        if (favorites && Array.isArray(favorites)) {
+          const favoriteIds = favorites.map((fav) => fav.recipe_id || fav.id);
+          setUserFavorites(favoriteIds);
         }
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
       }
-    };
-
-    fetchUserFavorites();
+    }
   }, [token, request]);
+
+  useEffect(() => {
+    fetchUserFavorites();
+  }, [fetchUserFavorites]);
 
   useEffect(() => {
     let recipes = [];
@@ -85,7 +85,12 @@ const HomePage = () => {
           <h2>Featured Recipes</h2>
 
           {loading && <p>Loading...</p>}
-          {error && <p>Error: {error}</p>}
+          {error && (
+            <p>
+              Error:{" "}
+              {typeof error === "string" ? error : "Failed to load recipes"}
+            </p>
+          )}
 
           {displayRecipes.length > 0 && !loading && (
             <div className="recipes-grid">
