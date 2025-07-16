@@ -6,6 +6,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProfileData() {
