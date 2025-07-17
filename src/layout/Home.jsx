@@ -87,42 +87,46 @@ const HomePage = () => {
   const error = favoritesError || randomError || userFavoritesError;
 
   return (
-    <div className="home-content">
-      <h1>Welcome to Chef&apos;s Kiss</h1>
+    <div>
+      <div className="home-content">
+        <h1>Welcome to Chef&apos;s Kiss</h1>
 
-      <section className="featured-recipes">
-        <h2>Featured Recipes</h2>
+        <section className="featured-recipes">
+          <h2>Featured Recipes</h2>
 
-        {loading && <p>Loading...</p>}
-        {error && (
-          <p>
-            Error:{" "}
-            {typeof error === "string" ? error : "Failed to load recipes"}
-          </p>
-        )}
+          {loading && <p>Loading...</p>}
+          {error && (
+            <p>
+              Error:{" "}
+              {typeof error === "string" ? error : "Failed to load recipes"}
+            </p>
+          )}
 
-        {!loading && displayRecipes.length > 0 && (
-          <div className="recipes-grid">
-            {displayRecipes.map((recipe) => {
-              const isFavorited = userFavorites.includes(recipe.id);
-              const isTop = favoritedRecipes.some(
-                (fav) => fav.id === recipe.id
-              );
+          {displayRecipes.length > 0 && !loading && (
+            <div className="recipes-grid">
+              {displayRecipes.map((recipe) => {
+                const isFavoritedRecipe = favoritedRecipes.some(
+                  (fav) => fav.id === recipe.id
+                );
 
-              return (
-                <div key={recipe.id} className="recipe-card-wrapper">
+                return (
                   <RecipeCard
+                    key={recipe.id}
                     recipe={recipe}
-                    isFavorited={isFavorited}
+                    isFavorited={userFavorites.includes(recipe.id)}
                     onFavoriteChange={handleFavoriteChange}
-                  />
-                  {!isTop && <span className="recipe-badge">Random Pick</span>}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
+                  >
+                    {!isFavoritedRecipe && (
+                      <div className="recipe-badge">Random Pick</div>
+                    )}
+                  </RecipeCard>
+                );
+              })}
+            </div>
+          )}
+          {displayRecipes.length === 0 && !loading && <p>No recipes found.</p>}
+        </section>
+      </div>
     </div>
   );
 };
