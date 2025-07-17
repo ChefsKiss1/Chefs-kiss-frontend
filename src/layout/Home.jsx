@@ -2,17 +2,9 @@ import { useMemo, useState, useEffect } from "react";
 import useQuery from "../api/useQuery";
 import RecipeCard from "./RecipeCard";
 
-<<<<<<< HEAD
-export default function HomePage() {
-  const [userFavorites, setUserFavorites] = useState([]);
-  const [displayRecipes, setDisplayRecipes] = useState([]);
-  const { token } = useAuth();
-  const { request } = useApi();
-=======
 const HomePage = () => {
   const [optimisticFavorites, setOptimisticFavorites] = useState(new Set());
   const [refetchKey, setRefetchKey] = useState(0);
->>>>>>> 318325453aea56d3b707e09370e4566bc38faa6a
 
   // Get top favorited recipes
   const {
@@ -131,4 +123,4 @@ const HomePage = () => {
       </section>
     </div>
   );
-}
+};
