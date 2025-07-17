@@ -50,24 +50,24 @@ const AddFavorite = ({
   };
 
   const handleAddToFavorites = async () => {
+    const userId = getUserIdFromToken();
+    if (!userId) {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
-
-      const userId = getUserIdFromToken();
-      if (!userId) {
-        navigate("/login");
-        return;
-      }
-
-      const success = await addToFavorites({
-        recipe_id: recipeId,
+      const requestBody = {
         user_id: userId,
-      });
+        recipe_id: recipeId,
+      };
 
-      if (success) {
-        onFavoriteChange(recipeId, true);
-      }
+      await addToFavorites(requestBody);
+      onFavoriteChange?.(recipeId, true);
     } catch (err) {
+      console.error("❌ Error adding to favorites:", err);
       handleError(err);
     } finally {
       setIsLoading(false);
