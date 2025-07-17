@@ -13,6 +13,7 @@ const HomePage = () => {
   } = useQuery("/favorites/top-favorited", "topRecipes");
 
   const needsRandomRecipes = favoritedRecipes.length < 9;
+
   const {
     data: randomRecipes = [],
     loading: randomLoading,

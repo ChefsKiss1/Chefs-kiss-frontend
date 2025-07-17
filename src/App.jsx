@@ -32,7 +32,7 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="/recipe/:id/edit" element={<RecipeEdit />} />
-       </Route>
+      </Route>
     </Routes>
   );
 }

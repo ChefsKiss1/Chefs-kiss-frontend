@@ -27,6 +27,7 @@
 // }
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
+import "./RecipeDetails.css";
 
 export default function RecipeDetails() {
   const API = import.meta.env.VITE_API_URL;
@@ -41,24 +42,44 @@ export default function RecipeDetails() {
         const res = await fetch(`${API}/recipes/${id}`);
         if (!res.ok) throw new Error("Failed to fetch recipe");
         const data = await res.json();
-        setRecipe(data);
+        setRecipe(data.rows[0]);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchRecipe();
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (!recipe) return <p>No recipe found</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!recipe) return <p>No recipe found.</p>;
 
   return (
-    <>
-      <p>{recipe.title}</p>
-      <p>Hi World</p>
-    </>
+    <div className="recipe-details">
+      <h1>{recipe.title}</h1>
+      <p className="recipe-meta">
+        <strong>Prep time:</strong> {recipe.prep_time} mins
+      </p>
+
+      <h3>Ingredients</h3>
+      <p>{recipe.ingredient_list}</p>
+
+      <h3>Instructions</h3>
+      <p>{recipe.instruction_list}</p>
+
+      {recipe.photos?.length > 0 && (
+        <div>
+          <h3>Photos</h3>
+          <div className="recipe-photos">
+            {recipe.photos.map((photo, i) => (
+              <img key={i} src={photo.img_url} alt={`Recipe Photo ${i + 1}`} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
