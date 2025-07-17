@@ -63,6 +63,15 @@ const RecipeEdit = () => {
           placeholder="Title"
           required
         />
+
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Image URL"
+          required
+        />
+
         <input
           type="number"
           value={prepTime}
