@@ -64,6 +64,18 @@ export default function AddRecipe() {
           onChange={handleChange}
         />
 
+        <label htmlFor="prepTime">Image URL</label>
+        <input
+          id="prepTime"
+          name="prepTime"
+          className="add-recipe-input"
+          type="string"
+          min="1"
+          placeholder="unsplash, pexels, etc."
+          value={formData.prepTime}
+          onChange={handleChange}
+        />
+
         <label htmlFor="prepTime">Prep Time (minutes)</label>
         <input
           id="prepTime"

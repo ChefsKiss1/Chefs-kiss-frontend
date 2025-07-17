@@ -23,7 +23,9 @@ const RecipeEdit = () => {
       setRecipe(data);
       setTitle(data.name);
       setInstructions(data.instructions);
-      setIngredientList(data.ingredientList ? data.ingredientList.join(", ") : "");
+      setIngredientList(
+        data.ingredientList ? data.ingredientList.join(", ") : ""
+      );
       setPrepTime(data.prepTime ? String(data.prepTime) : "");
       setLoading(false);
     };
@@ -35,11 +37,12 @@ const RecipeEdit = () => {
     await request(`/recipes/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: title, 
-      instructions,
-      ingredientList: ingredientList.split(",").map(item => item.trim()),
-        prepTime: Number(prepTime)
-     }),
+      body: JSON.stringify({
+        name: title,
+        instructions,
+        ingredientList: ingredientList.split(",").map((item) => item.trim()),
+        prepTime: Number(prepTime),
+      }),
     });
     navigate(`/recipe/${id}`);
   };
@@ -48,41 +51,51 @@ const RecipeEdit = () => {
   if (!recipe) return <p>Recipe not found.</p>;
 
   return (
-     <div className="recipe-edit-container"> {/* <-- Add this wrapper */}
-    <form className="recipe-edit-form" onSubmit={handleEditSubmit}>
-      <h2 className="recipe-edit-header">Edit Recipe</h2>
-      <input
-        type="text"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        placeholder="Title"
-        required
-      />
-       <input
-        type="number"
-        value={prepTime}
-        onChange={e => setPrepTime(e.target.value)}
-        placeholder="Prep Time (minutes)"
-        min="1"
-        required
-      />
-      <input
-        type="text"
-        value={ingredientList}
-        onChange={e => setIngredientList(e.target.value)}
-        placeholder="Ingredients (comma separated)"
-        required
-      />
-      <textarea
-        value={instructions}
-        onChange={e => setInstructions(e.target.value)}
-        placeholder="Instructions"
-        required
-      />
-      <button type="submit">Save</button>
-      <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>Cancel</button>
-    </form>
-  </div>
+    <div className="recipe-edit-container">
+      {" "}
+      {/* <-- Add this wrapper */}
+      <form className="recipe-edit-form" onSubmit={handleEditSubmit}>
+        <h2 className="recipe-edit-header">Edit Recipe</h2>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          required
+        />
+        <input
+          type="number"
+          value={prepTime}
+          onChange={(e) => setPrepTime(e.target.value)}
+          placeholder="Prep Time (minutes)"
+          min="1"
+          required
+        />
+        <input
+          type="text"
+          value={ingredientList}
+          onChange={(e) => setIngredientList(e.target.value)}
+          placeholder="Ingredients (comma separated)"
+          required
+        />
+        <textarea
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
+          placeholder="Instructions"
+          required
+        />
+        <button type="submit" className="cancel-btn">
+          Save
+        </button>
+        <button
+          type="button"
+          className="cancel-btn"
+          onClick={() => navigate(-1)}
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 };
 
