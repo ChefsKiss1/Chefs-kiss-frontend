@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import useQuery from "../api/useQuery";
 import RecipeCard from "./RecipeCard";
+import "./Home.css";
 
 const HomePage = () => {
   const [optimisticFavorites, setOptimisticFavorites] = useState(new Set());
@@ -18,10 +19,7 @@ const HomePage = () => {
     data: randomRecipes = [],
     loading: randomLoading,
     error: randomError,
-  } = useQuery(
-    needsRandomRecipes ? "/recipes/random" : "/recipes/empty",
-    "randomRecipes"
-  );
+  } = useQuery(needsRandomRecipes ? "/recipes/random" : "randomRecipes");
 
   const {
     data: userFavoritesData = [],
