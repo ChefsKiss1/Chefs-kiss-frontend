@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import AddFavorite from "./AddFavorite";
+import "./RecipeCard.css";
 
 const RecipeCard = ({
   recipe,
@@ -14,7 +15,7 @@ const RecipeCard = ({
   };
 
   const handleRecipeClick = () => {
-    navigate(`/recipe/${recipe.id}`);
+    navigate(`/recipes/${recipe.id}`);
   };
 
   return (
