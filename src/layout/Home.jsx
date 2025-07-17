@@ -1,14 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../auth/AuthContext";
-import { useApi } from "../api/ApiContext";
+import { useMemo, useState, useEffect } from "react";
 import useQuery from "../api/useQuery";
 import RecipeCard from "./RecipeCard";
 
+<<<<<<< HEAD
 export default function HomePage() {
   const [userFavorites, setUserFavorites] = useState([]);
   const [displayRecipes, setDisplayRecipes] = useState([]);
   const { token } = useAuth();
   const { request } = useApi();
+=======
+const HomePage = () => {
+  const [optimisticFavorites, setOptimisticFavorites] = useState(new Set());
+  const [refetchKey, setRefetchKey] = useState(0);
+>>>>>>> 318325453aea56d3b707e09370e4566bc38faa6a
 
   // Get top favorited recipes
   const {
@@ -24,29 +28,23 @@ export default function HomePage() {
     data: randomRecipes = [],
     loading: randomLoading,
     error: randomError,
-  } = useQuery(needsRandomRecipes ? "/recipes/random" : "", "randomRecipes");
+  } = useQuery(
+    needsRandomRecipes ? "/recipes/random" : "/recipes/empty",
+    "randomRecipes"
+  );
 
-  // Get user favorite recipe IDs
-  const fetchUserFavorites = useCallback(async () => {
-    if (token) {
-      try {
-        const favorites = await request("/favorites/user", {
-          method: "GET",
-        });
+  const {
+    data: userFavoritesData = [],
+    loading: userFavoritesLoading,
+    error: userFavoritesError,
+  } = useQuery("/favorites/user", "userFavorites");
 
-        const favoriteIds = favorites.map((fav) => fav.recipe_id || fav.id);
-        setUserFavorites(favoriteIds);
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-      }
-    }
-  }, [token, request]);
+  const serverFavorites = userFavoritesData.map(
+    (fav) => fav.recipe_id || fav.id
+  );
+  const userFavorites = [...serverFavorites, ...optimisticFavorites];
 
-  useEffect(() => {
-    fetchUserFavorites();
-  }, [fetchUserFavorites]);
-
-  useEffect(() => {
+  const displayRecipes = useMemo(() => {
     let recipes = [];
 
     if (favoritedRecipes.length >= 9) {
@@ -62,19 +60,37 @@ export default function HomePage() {
       recipes = favoritedRecipes;
     }
 
-    setDisplayRecipes(recipes);
+    return recipes;
   }, [favoritedRecipes, randomRecipes]);
 
   const handleFavoriteChange = (recipeId, isNowFavorited) => {
-    setUserFavorites((prev) =>
-      isNowFavorited
-        ? [...prev, recipeId]
-        : prev.filter((id) => id !== recipeId)
-    );
+    setOptimisticFavorites((prev) => {
+      const newSet = new Set(prev);
+      if (isNowFavorited) {
+        newSet.add(recipeId);
+      } else {
+        newSet.delete(recipeId);
+      }
+      return newSet;
+    });
+
+    setTimeout(() => {
+      setRefetchKey((prev) => prev + 1);
+      setOptimisticFavorites(new Set());
+    }, 1000);
   };
 
-  const loading = favoritesLoading || (needsRandomRecipes && randomLoading);
-  const error = favoritesError || randomError;
+  useEffect(() => {
+    if (refetchKey > 0) {
+      window.location.reload();
+    }
+  }, [refetchKey]);
+
+  const loading =
+    favoritesLoading ||
+    (needsRandomRecipes && randomLoading) ||
+    userFavoritesLoading;
+  const error = favoritesError || randomError || userFavoritesError;
 
   return (
     <div className="home-content">

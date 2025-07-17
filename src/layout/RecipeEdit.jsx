@@ -12,6 +12,8 @@ const RecipeEdit = () => {
   const [recipe, setRecipe] = useState(null);
   const [title, setTitle] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [ingredientList, setIngredientList] = useState("");
+  const [prepTime, setPrepTime] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +22,8 @@ const RecipeEdit = () => {
       setRecipe(data);
       setTitle(data.name);
       setInstructions(data.instructions);
+      setIngredientList(data.ingredientList ? data.ingredientList.join(", ") : "");
+      setPrepTime(data.prepTime ? String(data.prepTime) : "");
       setLoading(false);
     };
     fetchRecipe();
@@ -30,7 +34,11 @@ const RecipeEdit = () => {
     await request(`/recipes/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: title, instructions }),
+      body: JSON.stringify({ name: title, 
+      instructions,
+      ingredientList: ingredientList.split(",").map(item => item.trim()),
+        prepTime: Number(prepTime)
+     }),
     });
     navigate(`/recipe/${id}`);
   };
@@ -46,6 +54,21 @@ const RecipeEdit = () => {
         value={title}
         onChange={e => setTitle(e.target.value)}
         placeholder="Title"
+        required
+      />
+       <input
+        type="number"
+        value={prepTime}
+        onChange={e => setPrepTime(e.target.value)}
+        placeholder="Prep Time (minutes)"
+        min="1"
+        required
+      />
+      <input
+        type="text"
+        value={ingredientList}
+        onChange={e => setIngredientList(e.target.value)}
+        placeholder="Ingredients (comma separated)"
         required
       />
       <textarea

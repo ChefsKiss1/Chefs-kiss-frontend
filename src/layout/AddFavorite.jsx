@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { useApi } from "../api/ApiContext";
 import useMutation from "../api/useMutation";
 
 const AddFavorite = ({
@@ -13,15 +12,30 @@ const AddFavorite = ({
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { token } = useAuth();
-  const { request } = useApi();
 
-  const { mutate: addToFavorites } = useMutation("POST", "/favorites", []);
+  const { mutate: addToFavorites } = useMutation("POST", "/favorites", [
+    "topRecipes",
+    "userFavorites",
+    "randomRecipes",
+  ]);
+
+  const { mutate: removeFromFavorites } = useMutation(
+    "DELETE",
+    `/favorites/${recipeId}`,
+    ["topRecipes", "userFavorites", "randomRecipes"]
+  );
 
   const getUserIdFromToken = () => {
     if (!token) return null;
 
     try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
+      const parts = token.split(".");
+      if (parts.length !== 3) {
+        console.error("Invalid token format");
+        return null;
+      }
+
+      const payload = JSON.parse(atob(parts[1]));
       return payload.id;
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -52,7 +66,6 @@ const AddFavorite = ({
 
       if (success) {
         onFavoriteChange(recipeId, true);
-        window.location.reload();
       }
     } catch (err) {
       handleError(err);
@@ -71,14 +84,12 @@ const AddFavorite = ({
         return;
       }
 
-      const result = await request(`/favorites/${recipeId}`, {
-        method: "DELETE",
-        body: JSON.stringify({ user_id: userId }),
+      const success = await removeFromFavorites({
+        user_id: userId,
       });
 
-      if (result) {
+      if (success) {
         onFavoriteChange(recipeId, false);
-        window.location.reload();
       }
     } catch (err) {
       handleError(err);
@@ -89,6 +100,12 @@ const AddFavorite = ({
 
   const handleClick = (e) => {
     e.stopPropagation();
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
     if (isFavorited) {
       handleRemoveFromFavorites();
     } else {
