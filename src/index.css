@@ -163,9 +163,33 @@
     max-width: 97vw;
     padding: 1rem;
   }
-  .profile-user-row {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
+}
+.profile-user-row {
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.please-login {
+  color: #ffffff;
+}
+footer {
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* space between links */
+  color: #fff;
+  padding: 1.2rem 0;
+  background: #232323; /* optional for dark background */
+}
+footer a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+footer a:hover {
+  color: #ffffff;
 }
