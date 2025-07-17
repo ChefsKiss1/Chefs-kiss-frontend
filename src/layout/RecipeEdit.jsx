@@ -48,9 +48,9 @@ const RecipeEdit = () => {
   if (!recipe) return <p>Recipe not found.</p>;
 
   return (
-     <div className="edit-recipe-container"> {/* <-- Add this wrapper */}
-    <form className="edit-recipe-form" onSubmit={handleEditSubmit}>
-      <h2 className="edit-recipe-header">Edit Recipe</h2>
+     <div className="recipe-edit-container"> {/* <-- Add this wrapper */}
+    <form className="recipe-edit-form" onSubmit={handleEditSubmit}>
+      <h2 className="recipe-edit-header">Edit Recipe</h2>
       <input
         type="text"
         value={title}
