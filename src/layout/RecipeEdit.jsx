@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useApi } from "../api/ApiContext";
+import "./RecipeEdit.css";
 
 const RecipeEdit = () => {
   const { id } = useParams();
@@ -47,8 +48,9 @@ const RecipeEdit = () => {
   if (!recipe) return <p>Recipe not found.</p>;
 
   return (
-    <form onSubmit={handleEditSubmit}>
-      <h2>Edit Recipe</h2>
+     <div className="edit-recipe-container"> {/* <-- Add this wrapper */}
+    <form className="edit-recipe-form" onSubmit={handleEditSubmit}>
+      <h2 className="edit-recipe-header">Edit Recipe</h2>
       <input
         type="text"
         value={title}
@@ -78,8 +80,9 @@ const RecipeEdit = () => {
         required
       />
       <button type="submit">Save</button>
-      <button type="button" onClick={() => navigate(-1)}>Cancel</button>
+      <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>Cancel</button>
     </form>
+  </div>
   );
 };
 

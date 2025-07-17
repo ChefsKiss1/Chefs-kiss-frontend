@@ -1,0 +1,63 @@
+.edit-recipe-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 100px rgba(0,0,0,0.08);
+  padding: 32px;
+  max-width: 500px;
+  margin: 40px auto;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.edit-recipe-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #E50914;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.edit-recipe-form input,
+.edit-recipe-form textarea {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.edit-recipe-form input:focus,
+.edit-recipe-form textarea:focus {
+  border-color: #E50914;
+  outline: none;
+}
+
+.edit-recipe-form button {
+  background: #E50914;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: background 0.2s;
+}
+
+.edit-recipe-form button:hover {
+  background: #b0060f;
+}
+
+.edit-recipe-form .cancel-btn {
+  background: #ddd;
+  color: #333;
+}
+
+.edit-recipe-form .cancel-btn:hover {
+  background: #bbb;
+}
