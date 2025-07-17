@@ -1,0 +1,131 @@
+.register-page-container {
+  background: #181818;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-header {
+  margin-bottom: 2rem;
+}
+
+.register-title {
+  color: #e53935;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.register-form-wrapper {
+  background: #222;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-subtitle {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.register-label {
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.register-input {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+.register-input:focus {
+  outline: 2px solid #e53935;
+}
+
+.register-input::placeholder {
+  color: #888;
+}
+
+.register-btn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.register-btn:hover {
+  background: #b71c1c;
+}
+
+.register-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.register-error {
+  color: #e53935;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.register-login-link {
+  color: #e53935;
+  margin-top: 1.5rem;
+  text-decoration: underline;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.register-login-link:hover {
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .register-page-container {
+    padding: 1rem;
+  }
+
+  .register-form-wrapper {
+    padding: 1.5rem 2rem;
+  }
+
+  .register-title {
+    font-size: 2rem;
+  }
+
+  .register-subtitle {
+    font-size: 1.1rem;
+  }
+}
