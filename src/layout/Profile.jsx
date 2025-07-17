@@ -153,7 +153,7 @@ export default function ProfilePage() {
           <div className="profile-actions">
             <button>Settings</button>
             <button>Edit Profile</button>
-            <button onClick={handleLogout}>Log out</button>
+            <button>Delete Recipe</button>
           </div>
         </div>
         <div>Loading recipes...</div>

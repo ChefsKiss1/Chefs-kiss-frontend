@@ -3,20 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useApi } from "../api/ApiContext";
 import "./RecipeEdit.css";
-
 const RecipeEdit = () => {
   const { id } = useParams();
   const { token } = useAuth();
   const { request } = useApi();
   const navigate = useNavigate();
-
   const [recipe, setRecipe] = useState(null);
   const [title, setTitle] = useState("");
   const [instructions, setInstructions] = useState("");
   const [ingredientList, setIngredientList] = useState("");
   const [prepTime, setPrepTime] = useState("");
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchRecipe = async () => {
       const data = await request(`/recipes/${id}`, { method: "GET" });
@@ -31,7 +28,6 @@ const RecipeEdit = () => {
     };
     fetchRecipe();
   }, [id, request]);
-
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     await request(`/recipes/${id}`, {
@@ -46,10 +42,8 @@ const RecipeEdit = () => {
     });
     navigate(`/recipe/${id}`);
   };
-
   if (loading) return <p>Loading...</p>;
   if (!recipe) return <p>Recipe not found.</p>;
-
   return (
     <div className="recipe-edit-container">
       {" "}
@@ -107,5 +101,4 @@ const RecipeEdit = () => {
     </div>
   );
 };
-
 export default RecipeEdit;
