@@ -3,20 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { useApi } from "../api/ApiContext";
 import "./RecipeEdit.css";
-
 const RecipeEdit = () => {
   const { id } = useParams();
   const { token } = useAuth();
   const { request } = useApi();
   const navigate = useNavigate();
-
   const [recipe, setRecipe] = useState(null);
   const [title, setTitle] = useState("");
   const [instructions, setInstructions] = useState("");
   const [ingredientList, setIngredientList] = useState("");
   const [prepTime, setPrepTime] = useState("");
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchRecipe = async () => {
       const data = await request(`/recipes/${id}`, { method: "GET" });
@@ -26,12 +23,14 @@ const RecipeEdit = () => {
       setIngredientList(
         data.ingredientList ? data.ingredientList.join(", ") : ""
       );
+      setIngredientList(
+        data.ingredientList ? data.ingredientList.join(", ") : ""
+      );
       setPrepTime(data.prepTime ? String(data.prepTime) : "");
       setLoading(false);
     };
     fetchRecipe();
   }, [id, request]);
-
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     await request(`/recipes/${id}`, {
@@ -43,13 +42,17 @@ const RecipeEdit = () => {
         ingredientList: ingredientList.split(",").map((item) => item.trim()),
         prepTime: Number(prepTime),
       }),
+      body: JSON.stringify({
+        name: title,
+        instructions,
+        ingredientList: ingredientList.split(",").map((item) => item.trim()),
+        prepTime: Number(prepTime),
+      }),
     });
     navigate(`/recipe/${id}`);
   };
-
   if (loading) return <p>Loading...</p>;
   if (!recipe) return <p>Recipe not found.</p>;
-
   return (
     <div className="recipe-edit-container">
       {" "}
@@ -98,5 +101,4 @@ const RecipeEdit = () => {
     </div>
   );
 };
-
 export default RecipeEdit;
