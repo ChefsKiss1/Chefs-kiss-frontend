@@ -42,11 +42,13 @@ const HomePage = () => {
     if (favoritedRecipes.length >= 9) {
       recipes = favoritedRecipes.slice(0, 9);
     } else if (randomRecipes.length > 0) {
-      const favoritedIds = new Set(favoritedRecipes.map((r) => r.id));
-      const uniqueRandom = randomRecipes.filter((r) => !favoritedIds.has(r.id));
+      const favoritedIds = new Set(favoritedRecipes.map((recipe) => recipe.id));
+      const uniqueRandomRecipes = randomRecipes.filter(
+        (recipe) => !favoritedIds.has(recipe.id)
+      );
       recipes = [
         ...favoritedRecipes,
-        ...uniqueRandom.slice(0, 9 - favoritedRecipes.length),
+        ...uniqueRandomRecipes.slice(0, 9 - favoritedRecipes.length),
       ];
     } else {
       recipes = favoritedRecipes;
