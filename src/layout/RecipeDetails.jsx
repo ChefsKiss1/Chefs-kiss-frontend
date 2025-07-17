@@ -51,7 +51,7 @@ export default function RecipeDetails() {
     };
 
     fetchRecipe();
-  }, [id, API]);
+  }, [id]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
