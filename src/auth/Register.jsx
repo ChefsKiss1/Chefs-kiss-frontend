@@ -25,7 +25,7 @@ export default function Register() {
   return (
     <div className="register-page-container">
       <div className="register-header">
-        <h1 className="register-title">CHEF'S KISS</h1>
+        <h1 className="register-title">Chef's Kiss</h1>
       </div>
 
       <div className="register-form-wrapper">
