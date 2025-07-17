@@ -6,7 +6,6 @@ const HomePage = () => {
   const [optimisticFavorites, setOptimisticFavorites] = useState(new Set());
   const [refetchKey, setRefetchKey] = useState(0);
 
-  // Get top favorited recipes
   const {
     data: favoritedRecipes = [],
     loading: favoritesLoading,
@@ -15,7 +14,6 @@ const HomePage = () => {
 
   const needsRandomRecipes = favoritedRecipes.length < 9;
 
-  // Get random recipes only if needed
   const {
     data: randomRecipes = [],
     loading: randomLoading,
@@ -46,6 +44,7 @@ const HomePage = () => {
       const uniqueRandomRecipes = randomRecipes.filter(
         (recipe) => !favoritedIds.has(recipe.id)
       );
+
       recipes = [
         ...favoritedRecipes,
         ...uniqueRandomRecipes.slice(0, 9 - favoritedRecipes.length),
