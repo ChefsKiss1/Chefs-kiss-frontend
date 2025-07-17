@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
   const [tab, setTab] = useState("recipes");
   const [user, setUser] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProfileData() {
@@ -95,6 +97,12 @@ export default function ProfilePage() {
                 <span className="favorite-label">Favorite</span>
               )}
               <div>{post.title}</div>
+              <button
+                style={{ marginTop: "8px" }}
+                onClick={() => navigate(`/recipe/${post.id}/edit`)}
+              >
+                Edit
+              </button>
             </div>
           ))}
         </div>
