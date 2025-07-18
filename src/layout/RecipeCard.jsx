@@ -26,12 +26,12 @@ const RecipeCard = ({
     >
       {children}
 
-      <h3>{recipe.name}</h3>
+      <h3>{recipe.title}</h3>
 
       {recipe.img_url && (
         <img
           src={recipe.img_url}
-          alt={recipe.name}
+          alt={recipe.title}
           className="recipe-image"
           onError={(e) => {
             e.target.style.display = "none";
