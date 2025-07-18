@@ -5,6 +5,7 @@ import "./AddRecipe.css";
 export default function AddRecipe() {
   const [formData, setFormData] = useState({
     title: "",
+    imageUrl: "", // Add imageUrl field
     prepTime: "",
     ingredientList: "",
     instructionList: "",
@@ -25,7 +26,8 @@ export default function AddRecipe() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, prepTime, ingredientList, instructionList } = formData;
+    const { title, imageUrl, prepTime, ingredientList, instructionList } =
+      formData;
 
     if (!title || !prepTime || !ingredientList || !instructionList) {
       alert("Please fill in all fields.");
@@ -34,6 +36,7 @@ export default function AddRecipe() {
 
     const success = await mutate({
       title,
+      imageUrl, // Include imageUrl in the request
       prepTime: Number(prepTime),
       ingredientList: ingredientList.split(",").map((item) => item.trim()),
       instructionList,
@@ -42,6 +45,7 @@ export default function AddRecipe() {
     if (success) {
       setFormData({
         title: "",
+        imageUrl: "", // Reset imageUrl
         prepTime: "",
         ingredientList: "",
         instructionList: "",
@@ -64,15 +68,14 @@ export default function AddRecipe() {
           onChange={handleChange}
         />
 
-        <label htmlFor="prepTime">Image URL</label>
+        <label htmlFor="imageUrl">Image URL</label>
         <input
-          id="prepTime"
-          name="prepTime"
+          id="imageUrl"
+          name="imageUrl"
           className="add-recipe-input"
-          type="string"
-          min="1"
-          placeholder="unsplash, pexels, etc."
-          value={formData.prepTime}
+          type="url"
+          placeholder="https://example.com/image.jpg"
+          value={formData.imageUrl}
           onChange={handleChange}
         />
 
